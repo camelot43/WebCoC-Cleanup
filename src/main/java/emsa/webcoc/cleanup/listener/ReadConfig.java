@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -17,20 +19,26 @@ import java.util.Set;
  */
 public class ReadConfig {
     
+    private final Logger logger = LogManager.getLogger(ReadConfig.class);
+    
     private Properties prop;
     
     public ReadConfig () {
+        
+         logger.info("ReadConfig Initialized");
+         
         try{
             prop = new Properties();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/resources/config/config.properties");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
             
             if(inputStream != null){
+                logger.info("Reding properties");
                 prop.load(inputStream);
             }else{
-                System.err.println("Err input Stream == null");
+                logger.fatal("Can't open config.properties file");
             }          
         }catch (IOException e ) {
-            System.out.println("I/O Exception");
+            logger.fatal("I/O Exception");
         }
     }
     
