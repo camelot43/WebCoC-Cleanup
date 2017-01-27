@@ -25,15 +25,18 @@ public class ReadConfig {
     
     public ReadConfig () {
         
-         logger.info("ReadConfig Initialized");
+        logger.info("ReadConfig Initialized");
+        
+        InputStream inputStream = null;
          
         try{
             prop = new Properties();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+            inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
             
             if(inputStream != null){
                 logger.info("Reding properties");
                 prop.load(inputStream);
+                inputStream.close();
             }else{
                 logger.fatal("Can't open config.properties file");
             }          
